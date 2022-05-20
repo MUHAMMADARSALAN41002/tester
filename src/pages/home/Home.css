@@ -1,0 +1,11 @@
+.viewcourses-btn {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    position: fixed;
+}
+
+.heading-first {
+text-transform: uppercase;
+display: flex;
+}
