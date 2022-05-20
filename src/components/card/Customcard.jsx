@@ -9,7 +9,8 @@ const Customcard = () => {
   return (
   <>
     <Card
-      style={{width: 350}}
+    hoverable
+      style={{width: 300}}
       cover={
         <img
           alt="example"

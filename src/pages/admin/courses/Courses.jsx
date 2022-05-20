@@ -28,19 +28,23 @@ const Courses = () => {
           });
         });
         setarrdata(arr);
-        })
+      })
+      
 
       .catch((error) => {
         const errorMessage = error.message;
         message.error(errorMessage);
       });
   };
+  // console.log(arrdata)
   return (
     <>
       <Navbar />
-      {/* {arrdata.map(() => { */}
-        <Usercoursetemplate />
-      {/* })} */}
+      {arrdata.map((alldata, index) => {
+        
+        return <Usercoursetemplate coursename={alldata.arcoursename} startdate={alldata.arrstartdate} lastdate={alldata.arrlastdate} description={alldata.arrdescription} />
+        // console.log(arrdata)
+      })} 
     </>
   );
 };

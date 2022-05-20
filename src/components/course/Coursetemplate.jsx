@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
-import { Row, Col } from "antd";
 import { getDocs, collection } from "firebase/firestore";
 import { Table } from "antd";
 import { db } from "../../firebase/Config";
@@ -62,22 +61,14 @@ const Admincoursetemplate = () => {
     const startdate = alldata.arrstartdate;
     const lastdate = alldata.arrlastdate;
     const today = new Date().toISOString().slice(0, 10);
-    const date = new Date()
-    const startformated = startdate.replace(/-/g,'')
-    const expireformated = lastdate.replace(/-/g,'')
-    const current_formated = `${date.getFullYear()}${date.getDay()<10?"0"+date.getDay():date.getDay()}${date.getDate()}`
+    console.log(startdate, lastdate, today);
     let statuscompare;
-    if(current_formated >= startformated && current_formated < expireformated){
-      statuscompare="Active"
-        console.log("active")
-    }
-    else if(current_formated<startformated){
-      statuscompare="Pending"
-        console.log("pending")
-    }
-    else{
-      statuscompare="Expired"
-        console.log("expired")
+    if (today >= startdate && lastdate >= today) {
+      statuscompare = "Active";
+    } else if (startdate > today) {
+      statuscompare = "Pending";
+    } else {
+      statuscompare = "Closed";
     }
     const userdata = {
       key: index,
@@ -88,6 +79,7 @@ const Admincoursetemplate = () => {
     };
     return userdata;
   });
+
   return (
     <div>
       <Table
@@ -101,27 +93,28 @@ const Admincoursetemplate = () => {
 };
 
 const Usercoursetemplate = (props) => {
+  console.log(props)
   const [visible, setVisible] = useState(false);
   return (
     <>
-      {" "}
       <Card>
         <Card
-        hoverable
+          hoverable
           type="inner"
           style={{ marginTop: 16 }}
-          title="Inner Card title"
+          title={props.coursename}
           extra={
             <Button type="primary" onClick={() => setVisible(true)}>
               Enroll Now
             </Button>
           }
         >
-          Inner Card content
-          
+          {props.description}
           <hr />
-          <h4 style={{margin:0}}>cousrse is starting from : {props.lastdate}</h4> 
-          <h4>last date for apply : {props.lastdate}</h4> 
+          <h4 style={{ margin: 0 }}>
+            cousrse is starting from : {props.startdate}
+          </h4>
+          <h4>last date for apply : {props.lastdate}</h4>
         </Card>
       </Card>
       <Modal
